@@ -97,7 +97,7 @@ class AjaxInvalidFormMixin(JSONResponseMixin, TemplateResponseMixin):
             formfields = dict([(fieldname, form[fieldname]) for fieldname in form.fields.keys()])
             errors = form.errors
 
-        if self.request.POST.has_key('fields'):
+        if 'fields' in self.request.POST:
             fields = request.POST.getlist('fields') + ['__all__']
             errors = dict([(key, val) for key, val in errors.iteritems() if key in fields])
 
