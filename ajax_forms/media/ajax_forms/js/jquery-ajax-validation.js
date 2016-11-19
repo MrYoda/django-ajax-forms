@@ -22,7 +22,7 @@
             var field = field || false;
             var formSuccessCallback = formSuccessCallback || false;
             $.ajax({
-                async: false,
+                async: true,
                 data: data,
                 dataType: 'json',
                 traditional: true,
