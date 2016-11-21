@@ -7,19 +7,11 @@ except ImportError:
 
 from django import forms
 from django.http import HttpResponse
-from django.views.decorators.http import require_POST
 from django.forms.formsets import BaseFormSet
-from django.views.generic.edit import BaseFormView
 from django.views.generic.edit import BaseCreateView
 from django.views.generic import FormView
-from django.views.generic.edit import FormMixin
-from django.views.generic import View
-from django.views.generic.edit import ModelFormMixin
 from django.views.generic.edit import TemplateResponseMixin
-from django.views.generic.edit import ProcessFormView
-from django.views.generic.edit import SingleObjectMixin
 
-from ajax_forms.utils import LazyEncoder
 
 FORM_SUBMITTED = "valid_submit"
 
