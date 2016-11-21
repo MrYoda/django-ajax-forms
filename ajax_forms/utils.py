@@ -8,6 +8,7 @@ except ImportError:
     except ImportError:
         from django.utils.simplejson import JSONEncoder
 
+
 class LazyEncoder(JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Promise):

@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 try:
     import json
 except ImportError:
@@ -21,6 +23,7 @@ from ajax_forms.utils import LazyEncoder
 
 FORM_SUBMITTED = "valid_submit"
 
+
 class JSONResponseMixin(object):
     def render_to_json_response(self, context):
         return self.get_json_response(self.convert_context_to_json(context))
@@ -31,11 +34,13 @@ class JSONResponseMixin(object):
     def convert_context_to_json(self, context):
         return json.dumps(context)
 
+
 class RealSubmitMixin(object):
     def is_actual_submit(self):
         if self.request.POST.get('submit') == 'true':
             return True
         return False
+
 
 class AjaxValidFormMixin(RealSubmitMixin):
     def form_valid(self, form):
@@ -49,9 +54,10 @@ class AjaxValidFormMixin(RealSubmitMixin):
             return self.render_to_json_response({ 'valid': True })
         return response
 
+
 class AjaxValidModelFormMixin(RealSubmitMixin):
-    def singleObjectModelToDict(self, object):
-        subObject = object.__dict__
+    def singleObjectModelToDict(self, obj):
+        subObject = obj.__dict__
         del subObject['_state']
         return subObject
 
@@ -65,9 +71,14 @@ class AjaxValidModelFormMixin(RealSubmitMixin):
             self.valid_submit(form)
 
         if self.object:
-            return self.render_to_json_response({ 'valid': True, 'submitted': True, 'object': self.singleObjectModelToDict(self.object)})
+            return self.render_to_json_response({
+                'valid': True,
+                'submitted': True,
+                'object': self.singleObjectModelToDict(self.object)
+            })
 
-        return self.render_to_json_response({ 'valid': True })
+        return self.render_to_json_response({'valid': True})
+
 
 class AjaxInvalidFormMixin(JSONResponseMixin, TemplateResponseMixin):
     def get_form_class(self):
@@ -79,7 +90,6 @@ class AjaxInvalidFormMixin(JSONResponseMixin, TemplateResponseMixin):
         if not form_class:
             form_class = self.kwargs["form_class"]
         return form_class
-
 
     def form_invalid(self, form):
         # Get the BoundFields which contains the errors attribute
@@ -98,7 +108,7 @@ class AjaxInvalidFormMixin(JSONResponseMixin, TemplateResponseMixin):
             errors = form.errors
 
         if 'fields' in self.request.POST:
-            fields = request.POST.getlist('fields') + ['__all__']
+            fields = self.request.POST.getlist('fields') + ['__all__']
             errors = dict([(key, val) for key, val in errors.items() if key in fields])
 
         final_errors = {}
@@ -115,8 +125,10 @@ class AjaxInvalidFormMixin(JSONResponseMixin, TemplateResponseMixin):
         }
         return self.render_to_json_response(data)
 
+
 class AjaxFormView(AjaxValidFormMixin, AjaxInvalidFormMixin, FormView):
     pass
+
 
 class AjaxModelFormView(AjaxValidModelFormMixin, AjaxInvalidFormMixin, BaseCreateView):
     pass

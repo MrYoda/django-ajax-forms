@@ -22,7 +22,7 @@ SECRET_KEY = 'f8kkupu8pa%%u$dgk6c!os39ew41v7i7^u*8xfxg5p@+c&)b#^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DIRS=os.path.join(BASE_DIR, 'tests/templates/'),
+TEMPLATE_DIRS = os.path.join(BASE_DIR, 'tests/templates/'),
 
 TEMPLATES = [
     {

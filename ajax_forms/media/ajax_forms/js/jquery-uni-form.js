@@ -10,4 +10,3 @@ function uniform_callback(data, form) {
             + val + '</p>');
     });
 }
-
