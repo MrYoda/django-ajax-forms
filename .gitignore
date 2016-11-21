@@ -42,3 +42,5 @@ ehthumbs.db
 Icon?
 Thumbs.db
 
+# IDE
+.idea/
